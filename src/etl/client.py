@@ -13,7 +13,7 @@ class Client:
     password = PASSWORD
     identitier = "tazs-3rd5"
 
-    def get_dataset(self) -> pd.DataFrame:
+    def make_request(self) -> pd.DataFrame:
         # TODO: change date to ingest data daily
         client = Socrata(
             self.url,
@@ -21,7 +21,7 @@ class Client:
             username=self.username,
             password=self.password,
         )
-        date = str(datetime.today().date())
+        date = str(datetime.today().date() - timedelta(days=1))
 
         # initial query="SELECT * WHERE date_extract_y(report_datetime) = 2023 LIMIT 100000"
         # subsequence query is daily data
