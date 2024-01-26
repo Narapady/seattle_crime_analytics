@@ -7,22 +7,7 @@ import datetime
 from io import StringIO
 import boto3
 from botocore.exceptions import ClientError
-
-
-def print_json(json_data) -> None:
-    formatted = json.dumps(json_data, indent=2)
-    print(formatted)
-
-
-def get_past_days(from_date: datetime.date, until_date: datetime.date) -> list[str]:
-    """
-    Returns a list of past days starting from January 1, 2024 until today.
-    """
-    past_days = []
-    while from_date < until_date:
-        past_days.append(str(from_date))
-        from_date += datetime.timedelta(days=1)
-    return past_days
+from src.utils import find_most_recent_date, get_past_days
 
 
 # data from https://data.seattle.gov/Public-Safety/SPD-Crime-Data-2008-Present/tazs-3rd5/about_data
@@ -72,9 +57,14 @@ class Client:
         s3_client = boto3.client(
             "s3", aws_access_key_id=AWS_ACCESS_KEY, aws_secret_access_key=AWS_SECRET_KEY
         )
-        # NOTE: initial query="select * where date_extract_y(report_datetime) = 2023 limit 100000"
-        from_date = datetime.date(2024, 1, 1)
+        # initial query="select * where date_extract_y(report_datetime) = 2023 limit 100000"
+        from_date = find_most_recent_date(s3_client=s3_client)
         until_date = datetime.date.today()
+
+        if from_date + datetime.timedelta(days=1) == until_date:
+            print("There is no new data to ingest")
+            return
+
         past_days = get_past_days(from_date=from_date, until_date=until_date)
         for day in past_days:
             query = (

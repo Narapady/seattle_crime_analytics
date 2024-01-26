@@ -18,5 +18,11 @@ class CrimeAdapter:
     def preprocess() -> None:
         pass
 
+    def load_to_postgres():
+        pass
+
+    def load_files_to_postgres():
+        pass
+
     def run():
         file_path = "./data"
