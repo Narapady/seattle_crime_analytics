@@ -1,1 +1,5 @@
+## Relational Model
+```mermaid
+erDiagram
 
+```

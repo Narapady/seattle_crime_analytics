@@ -3,14 +3,6 @@ import os
 from datetime import date
 
 
-def selected_unprocessed_files(file_path: str) -> list[str]:
-    files = os.listdir(file_path)
-    today = date.today()
-    for file in files:
-        file_date = file[:10]
-        pass
-
-
 class CrimeAdapter:
     def __init__(self, data: pd.DataFrame) -> None:
         self.data = data

@@ -9,9 +9,6 @@ def print_json(json_data) -> None:
 
 
 def get_past_days(from_date: datetime.date, until_date: datetime.date) -> list[str]:
-    """
-    Returns a list of past days starting from January 1, 2024 until today.
-    """
     past_days = []
     while from_date < until_date:
         past_days.append(str(from_date))
