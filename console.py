@@ -1,5 +1,7 @@
 from src.etl.client import Client
 from settings import USER_NAME, PASSWORD
+import pandas as pd
+import time
 
 
 def main() -> None:
