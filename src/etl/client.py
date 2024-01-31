@@ -3,6 +3,7 @@ from io import StringIO
 
 import boto3
 import pandas as pd
+import pytz
 from botocore.exceptions import ClientError
 from sodapy import Socrata
 
@@ -82,7 +83,7 @@ class Client:
         )
         # initial query="select * where date_extract_y(report_datetime) = 2023 limit 100000"
         from_date = find_most_recent_date(s3_client=s3_client)
-        until_date = datetime.date.today()
+        until_date = datetime.datetime.now(tz=pytz.timezone("Pacific/Apia")).date()
 
         if from_date + datetime.timedelta(days=1) == until_date:
             print("There is no new data to ingest")
