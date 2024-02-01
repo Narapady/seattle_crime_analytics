@@ -7,11 +7,8 @@ import time
 
 def main() -> None:
     s3 = S3(aws_access_key=AWS_ACCESS_KEY, aws_secret_key=AWS_SECRET_KEY)
-    s3.load_local_csv_to_bucket(
-        csv_file_path="data/2008-2023-spd-crime-data.csv",
-        key="2008-2023-spd-crime/2008-2023-spd-crime-data.csv",
-        bucket_name="s3-bucket-seattle-crime",
-    )
+    most_recent_file = s3.find_most_recent_date()
+    print(most_recent_file)
 
 
 if __name__ == "__main__":
