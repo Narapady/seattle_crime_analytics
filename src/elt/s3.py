@@ -1,7 +1,7 @@
 import boto3
 from io import StringIO
 import pandas as pd
-from botocore.exceptions import ClientError
+from botocore.exceptions import ClientError, NoCredentialsError
 import datetime
 
 
@@ -10,6 +10,20 @@ class S3:
         self.client = boto3.client(
             "s3", aws_access_key_id=aws_access_key, aws_secret_access_key=aws_secret_key
         )
+
+    def load_local_csv_to_bucket(
+        self,
+        csv_file_path: str,
+        key: str,
+        bucket_name: str = "s3-bucket-seattle-crime",
+    ) -> None:
+        try:
+            self.client.upload_file(csv_file_path, bucket_name, key)
+            print("File uploaded successfully!")
+        except FileNotFoundError:
+            print("The file does not exist.")
+        except NoCredentialsError:
+            print("Credentials not available.")
 
     def load_to_bucket(
         self,

@@ -31,6 +31,9 @@ def load_to_bucket(
     return s3.load_to_bucket(df=df, bucket_name=bucket_name)
 
 
+# TODO:
+# - bulk load data to 2008-2023-spd-crime/ in s3 bucket
+# - then load 2024 Jan daa to 2024-spd-crime/2024-01-spd-crime
 @flow(log_prints=True)
 def extract_and_load():
     socrata_client = Socrata(
@@ -40,6 +43,7 @@ def extract_and_load():
         password=password,
     )
     s3_client = S3(aws_access_key=AWS_ACCESS_KEY, aws_secret_key=AWS_SECRET_KEY)
+
     # initial query="select * where date_extract_y(report_datetime) = 2023 limit 100000"
     from_date = s3_client.find_most_recent_date(bucket_name="s3-bucket-seattle-crime")
     until_date = datetime.date.today()
