@@ -3,6 +3,7 @@ from io import StringIO
 import pandas as pd
 from botocore.exceptions import ClientError, NoCredentialsError
 import datetime
+from src.utils import build_file_path, extract_date_substrings
 
 
 class S3:
@@ -32,7 +33,7 @@ class S3:
     ):
         csv_buffer = StringIO()
         df.to_csv(csv_buffer, index=False)
-        key = str(df["report_datetime"].iloc[0])[:10] + "-spd-crime.csv"
+        key = build_file_path(df=df)
         try:
             self.client.put_object(
                 Body=csv_buffer.getvalue(), Bucket=bucket_name, Key=key
@@ -58,8 +59,8 @@ class S3:
         for obj in response["Contents"]:
             file_name = obj["Key"]
             files.append(file_name)
-        files.remove("2023-spd-crime.csv")
 
-        return max(
-            [datetime.datetime.strptime(file[:10], "%Y-%m-%d").date() for file in files]
-        )
+        file_date = extract_date_substrings(input_str=str(files[-1]))
+        date_object = datetime.datetime.strptime(file_date, "%Y-%m-%d").date()
+
+        return date_object
