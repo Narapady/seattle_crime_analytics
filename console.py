@@ -10,7 +10,7 @@ def main() -> None:
     password = PASSWORD
     identifier = "tazs-3rd5"
     client = Client(
-        url=url, username=str(username), password=str(password), identifier=identifier
+        url=url, username=username, password=password, identifier=identifier
     )
     client.run()
 

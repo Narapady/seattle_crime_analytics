@@ -1,8 +1,6 @@
 import datetime
 
-import boto3
 import pandas as pd
-import pytz
 from sodapy import Socrata
 
 from settings import APP_TOKEN, AWS_ACCESS_KEY, AWS_SECRET_KEY
@@ -12,7 +10,9 @@ from src.utils import get_past_days
 
 # data from https://data.seattle.gov/Public-Safety/SPD-Crime-Data-2008-Present/tazs-3rd5/about_data
 class Client:
-    def __init__(self, url: str, username: str, password: str, identifier: str):
+    def __init__(
+        self, url: str, username: str | None, password: str | None, identifier: str
+    ):
         self.url = url
         self.username = username
         self.password = password
@@ -57,11 +57,9 @@ class Client:
             return
 
         past_days = get_past_days(from_date=from_date, until_date=until_date)
-        breakpoint()
         for day in past_days:
-            if day != until_date:
-                query = f"SELECT * WHERE date_trunc_ymd(report_datetime) = '{day}T00:00:00.000'"
-                crime_df = self.make_request(socrata_client=socrata_client, query=query)
-                s3_client.load_to_bucket(
-                    df=crime_df, bucket_name="s3-bucket-seattle-crime"
-                )
+            query = (
+                f"SELECT * WHERE date_trunc_ymd(report_datetime) = '{day}T00:00:00.000'"
+            )
+            crime_df = self.make_request(socrata_client=socrata_client, query=query)
+            s3_client.load_to_bucket(df=crime_df, bucket_name="s3-bucket-seattle-crime")

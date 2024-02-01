@@ -6,7 +6,7 @@ import datetime
 
 
 class S3:
-    def __init__(self, aws_access_key: str, aws_secret_key: str) -> None:
+    def __init__(self, aws_access_key: str | None, aws_secret_key: str | None) -> None:
         self.client = boto3.client(
             "s3", aws_access_key_id=aws_access_key, aws_secret_access_key=aws_secret_key
         )
