@@ -1,7 +1,7 @@
 import datetime
 from prefect import task, flow
-from src.etl.client import Client
-from src.etl.s3 import S3
+from src.elt.client import Client
+from src.elt.s3 import S3
 from sodapy import Socrata
 from settings import USER_NAME, PASSWORD, AWS_ACCESS_KEY, AWS_SECRET_KEY, APP_TOKEN
 import pandas as pd
