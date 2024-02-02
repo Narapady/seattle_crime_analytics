@@ -30,4 +30,5 @@ class Client:
             query=query,
         )
         results_df = pd.DataFrame.from_records(results)
+
         return results_df

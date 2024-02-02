@@ -46,7 +46,7 @@ def extract_and_load():
 
     # initial query="select * where date_extract_y(report_datetime) = 2023 limit 100000"
     from_date = s3_client.find_most_recent_date(bucket_name="s3-bucket-seattle-crime")
-    until_date = datetime.date.today()
+    until_date = datetime.date.today()  # noqa: DTZ011
 
     if from_date + datetime.timedelta(days=1) == until_date:
         print("There is no new data to ingest")
