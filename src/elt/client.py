@@ -19,7 +19,6 @@ class Client:
         Args:
             socrata_client (Socrata): The Socrata client used to make the request.
             query (str): The query string used to filter the data.
-
         Returns:
             pd.DataFrame: A DataFrame containing the results of the request.
         """
