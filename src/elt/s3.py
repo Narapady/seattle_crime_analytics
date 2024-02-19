@@ -6,6 +6,7 @@ import datetime
 from src.utils import build_file_path, extract_date_substrings
 
 
+# TODO: Migrate to AWS wrangler
 class S3:
     def __init__(self, aws_access_key: str | None, aws_secret_key: str | None) -> None:
         self.client = boto3.client(

@@ -11,6 +11,11 @@ class Offense(BaseModel):
         "offense_start_datetime",
         "offense_end_datetime",
     ]
+    staging_cols: list[str] = [
+        "offense_id",
+        "offense_start_datetime",
+        "offense_end_datetime",
+    ]
     report_id: int
     offense_detail_id: int
     offense_start_datetime: datetime.datetime

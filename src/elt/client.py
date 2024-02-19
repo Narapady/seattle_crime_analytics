@@ -15,7 +15,6 @@ class Client:
     def make_request(self, socrata_client: Socrata, query: str) -> pd.DataFrame:
         """
         Makes a request to the Socrata API using the provided client and query.
-
         Args:
             socrata_client (Socrata): The Socrata client used to make the request.
             query (str): The query string used to filter the data.
@@ -23,7 +22,6 @@ class Client:
             pd.DataFrame: A DataFrame containing the results of the request.
         """
         # TODO: change date to ingest data daily
-
         results = socrata_client.get(
             self.identifier,
             query=query,

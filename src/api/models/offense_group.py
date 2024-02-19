@@ -11,6 +11,14 @@ class OffenseGroup(BaseModel):
         "offense_code",
         "crime_category",
     ]
+    staging_cols: list[str] = [
+        "offense_id",
+        "group_a_b",
+        "parent_group",
+        "description",
+        "offense_code",
+        "crime_category",
+    ]
     group_a_b: str
     parent_group: str
     description: str

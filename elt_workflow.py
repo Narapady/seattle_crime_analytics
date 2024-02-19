@@ -31,9 +31,6 @@ def load_to_bucket(
     return s3.load_to_bucket(df=df, bucket_name=bucket_name)
 
 
-# TODO:
-# - bulk load data to 2008-2023-spd-crime/ in s3 bucket
-# - then load 2024 Jan daa to 2024-spd-crime/2024-01-spd-crime
 @flow(log_prints=True)
 def extract_and_load():
     socrata_client = Socrata(
