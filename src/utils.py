@@ -28,3 +28,11 @@ def build_file_path(df: pd.DataFrame) -> str:
     sub_dir = str(df["report_datetime"].iloc[0])[:7] + "/"
     file_name = str(df["report_datetime"].iloc[0])[:10] + "-spd-crime.csv"
     return dir + sub_dir + file_name
+
+
+# for easy partition by year and month
+def fix_col_dtypes(df: pd.DataFrame) -> pd.DataFrame:
+    df["report_datetime"] = pd.to_datetime(df["report_datetime"])
+    df["report_year"] = df["report_datetime"].dt.year
+    df["report_month"] = df["report_datetime"].dt.month
+    return df
